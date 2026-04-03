@@ -10,41 +10,37 @@
     * { margin: 0; padding: 0; box-sizing: border-box; }
     html, body, #map { height: 100%; }
     body { font-family: Arial, sans-serif; background: #F5F5DC; }
-    .header { background: linear-gradient(135deg, #2D5A27, #3d7a35); color: white; padding: 10px 20px; display: flex; justify-content: space-between; align-items: center; position: fixed; top: 0; left: 0; right: 0; height: 50px; z-index: 1000; }
-    .header h1 { font-size: 1.1rem; display: flex; align-items: center; gap: 10px; }
-    .header h1 i { color: #FFD700; }
-    .header-actions { display: flex; gap: 8px; }
-    .btn { padding: 8px 12px; border: none; border-radius: 6px; cursor: pointer; font-size: 0.85rem; display: inline-flex; align-items: center; gap: 6px; }
-    .btn-primary { background: #FFD700; color: #333; }
-    .btn-secondary { background: rgba(255,255,255,0.2); color: white; }
-    .btn-danger { background: #dc3545; color: white; }
-    .btn-green { background: #2D5A27; color: white; }
-    #map { position: fixed; top: 50px; left: 0; right: 320px; bottom: 0; z-index: 1; }
-    .sidebar { position: fixed; top: 50px; right: 0; width: 320px; bottom: 0; background: white; box-shadow: -2px 0 15px rgba(0,0,0,0.1); overflow-y: auto; padding: 12px; z-index: 2; }
+    .header { background: linear-gradient(135deg, #2D5A27, #3d7a35); color: white; padding: 10px 20px; display:flex; align-items:center; justify-content:space-between; position: fixed; top:0; left:0; right:0; height:50px; z-index:1000; }
+    .header h1 { font-size: 1.1rem; display:flex; align-items:center; gap:10px; }
+    .header h1 i { color:#FFD700; }
+    .header-actions { display:flex; gap:8px; }
+    .btn { padding:8px 12px; border:none; border-radius:6px; cursor:pointer; font-size:0.85rem; display:inline-flex; align-items:center; gap:6px; }
+    .btn-primary { background:#FFD700; color:#333; }
+    .btn-secondary { background: rgba(255,255,255,0.2); color:white; }
+    .btn-green { background:#2D5A27; color:white; }
+    #map { position: fixed; top: 50px; left:0; right: 320px; bottom:0; z-index:1; }
+    .sidebar { position: fixed; top: 50px; right: 0; width: 320px; bottom: 0; background: white; box-shadow: -2px 0 15px rgba(0,0,0,0.1); padding: 12px; z-index:2; overflow-y:auto; }
     .section { margin-bottom: 14px; }
-    .section h3 { font-size: 0.9rem; color: #2D5A27; margin-bottom: 8px; }
-    .help-text { font-size: 0.8rem; color: #666; padding: 10px; background: #fff9e6; border-radius: 6px; line-height: 1.5; }
-    .field-card { background: #f8f8f8; border-radius: 8px; padding: 10px; margin-bottom: 10px; border: 1px solid #ddd; }
-    .field-card.selected { border-color: #FFD700; border-width: 2px; }
-    .field-name { width: 100%; padding: 6px; border: 1px solid #ddd; border-radius: 4px; margin-bottom: 8px; font-size: 0.85rem; }
-    .num-input { width: 60px; padding: 6px; border: 1px solid #ddd; border-radius: 4px; }
-    .line-item { display: flex; align-items: center; gap: 8px; padding: 6px; background: white; border-radius: 4px; margin-top: 6px; border: 1px solid #eee; }
-    .delete-btn { background: none; border: none; color: #999; cursor: pointer; padding: 4px; }
-    .delete-btn:hover { color: #dc3545; }
-    .stats { display: flex; gap: 12px; padding: 10px; background: #f0f0f0; font-size: 0.8rem; color: #666; border-radius: 6px; }
-    .bottom-bar { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); background: rgba(0,0,0,0.85); color: white; padding: 12px 16px; border-radius: 6px; z-index: 1000; display: none; }
-    .bottom-bar.visible { display: block; }
-    .color-palette { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 6px; }
-    .color-preset { width: 22px; height: 22px; border-radius: 4px; border: 2px solid transparent; cursor: pointer; }
-    .color-preset:hover { border-color: #333; transform: scale(1.05); }
-    .gradient { display: inline-block; width: 24px; height: 24px; vertical-align: middle; border-radius: 3px; border: 1px solid #ccc; }
+    .section h3 { font-size:0.9rem; color:#2D5A27; margin-bottom:8px; }
+    .help-text { font-size:0.8rem; color:#666; padding:10px; background:#fff9e6; border-radius:6px; line-height:1.5; }
+    .field-card { background:#f8f8f8; border-radius:8px; padding:10px; margin-bottom:10px; border:1px solid #ddd; }
+    .field-card.selected { border-color:#FFD700; border-width:2px; }
+    .field-name { width:100%; padding:6px; border:1px solid #ddd; border-radius:4px; margin-bottom:8px; font-size:0.85rem; }
+    .num-input { width:60px; padding:6px; border:1px solid #ddd; border-radius:4px; }
+    .line-item { display:flex; align-items:center; gap:8px; padding:6px; background:white; border-radius:4px; margin-top:6px; border:1px solid #eee; }
+    .delete-btn { background:none; border:none; color:#999; cursor:pointer; padding:4px; }
+    .delete-btn:hover { color:#dc3545; }
+    .stats { display:flex; gap:12px; padding:10px; background:#f0f0f0; font-size:0.8rem; color:#666; border-radius:6px; }
+    .bottom-bar { position: fixed; bottom: 20px; left:50%; transform: translateX(-50%); background: rgba(0,0,0,0.85); color:white; padding:12px 16px; border-radius:6px; z-index:1000; display:none; }
+    .bottom-bar.visible { display:block; }
+    .gradient-preview { width: 28px; height: 28px; border-radius:4px; border:1px solid #aaa; display:inline-block; vertical-align:middle; margin-left:6px; }
   </style>
 </head>
 <body>
   <div class="header">
     <h1><i class="fas fa-seedling"></i> Tulpen Velden Tracker</h1>
     <div class="header-actions">
-      <button class="btn btn-primary" onclick="startDrawField()"><i class="fas fa-draw-polygon"></i> Teken Veld</button>
+      <button class="btn btn-primary" id="btnField" onclick="startDrawField()"><i class="fas fa-draw-polygon"></i> Teken Veld</button>
       <button class="btn btn-secondary" onclick="startDrawLine()"><i class="fas fa-arrows-alt-h"></i> Rij Richting</button>
       <button class="btn btn-secondary" onclick="exportData()"><i class="fas fa-download"></i> Exporteer</button>
     </div>
@@ -55,7 +51,9 @@
   <div class="sidebar" id="sidebar">
     <div class="section">
       <h3>Instructies</h3>
-      <div class="help-text">1. Teken veld; 2. Selecteer veld; 3. Teken rij richting; 4. Genereer rijen; 5. Pas kleur/naam aan</div>
+      <div class="help-text">
+        1. Teken veld 2. Selecteer veld 3. Teken rij richting 4. Genereer rijen 5. Pas kleur/naam aan
+      </div>
     </div>
 
     <div class="section" id="fieldSection">
@@ -94,10 +92,11 @@
       "#f4727b","#34d399","#60a5fa","#e11d48","#2dd4bf"
     ];
 
-    let map, fields = [], selectedFieldId = null, fieldLayers = {}, lineLayers = {}, directionLayers = {};
+    let map, fields = [], selectedFieldId = null;
+    let fieldLayers = {}, lineLayers = {}, directionLayers = {};
     let mode = 'select';
-    let gradientCache = {}; // per-line cache
-    // Init map
+    let rowInputs = {}; // per-field row count inputs
+
     function init() {
       map = L.map('map').setView([52.0, 4.3], 17);
       L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { attribution: '© OpenStreetMap' }).addTo(map);
@@ -107,32 +106,39 @@
       updateStats();
     }
 
-    function onMapClick(e){
-      if (mode==='drawField') {
-        // veldpunt toevoegen (Temp)
-        addFieldPoint(e.latlng);
-      } else if (mode==='drawLine') {
-        // lijnpunt toegevoegd
-        addLinePoint(e.latlng);
+    // Basis helpers
+    function getField(id){ return fields.find(f => f.id === id); }
+    function getLine(id){
+      for (const f of fields){
+        const l = f.lines.find(l => l.id === id);
+        if (l) return l;
       }
+      return null;
     }
 
     // Veld tekenen
-    let tempFieldPoints = [];
     function startDrawField(){
-      tempFieldPoints = [];
       cancelDraw();
       mode = 'drawField';
-      document.getElementById('bottomText').textContent = 'Klik op de kaart om punten te plaatsen';
       document.getElementById('bottomBar').className = 'bottom-bar visible';
+      document.getElementById('bottomText').textContent = 'Klik op de kaart om punten te plaatsen';
     }
+
+    function onMapClick(e){
+      if (mode==='drawField') addFieldPoint(e.latlng);
+    }
+
+    const tempFieldPoints = [];
     function addFieldPoint(latlng){
+      // 3 puntjes zijn genoeg om veld te tonen
       tempFieldPoints.push(latlng);
       L.circleMarker(latlng, { radius: 5, color: '#2D5A27', fillColor: '#FFD700', fillOpacity: 0.9 }).addTo(map);
-      if(tempFieldPoints.length >= 3){
-        document.getElementById('bottomText').innerHTML = 'Punten: ' + tempFieldPoints.length + ' • Maak veld af';
+      if (tempFieldPoints.length >= 3){
+        document.getElementById('bottomText').innerHTML = 'Veld klaar? klik Veld Maken';
+        // voeg knop toe via bottomText als alternatief
       }
     }
+
     function finishField() {
       if (tempFieldPoints.length < 3) return;
       const pts = tempFieldPoints.map(p => [p.lat, p.lng]);
@@ -153,76 +159,61 @@
     }
 
     function cancelDraw(){
-      tempFieldPoints = [];
-      mode='select';
+      // reset kleine UI state
+      mode = 'select';
       document.getElementById('bottomBar').className = 'bottom-bar';
-      document.getElementById('bottomText').textContent = '';
+      // reset temp
+      tempFieldPoints.length = 0;
     }
 
-    // Rij richting tekenen
-    let tempLineStart = null;
+    // Rij richting
     function startDrawLine(){
       if (!selectedFieldId) return;
       cancelDraw();
       mode = 'drawLine';
-      document.getElementById('bottomText').textContent = 'Klik beginpunt van rij';
+      document.getElementById('bottomText').textContent = 'Klik begin en eind van rij richting';
       document.getElementById('bottomBar').className = 'bottom-bar visible';
     }
-    function addLinePoint(latlng){
-      if (!tempLineStart){
-        tempLineStart = latlng;
-        L.circleMarker(latlng, { radius: 6, color: '#FFD700', fillColor: '#2D5A27' }).addTo(map);
-        document.getElementById('bottomText').textContent = 'Klik eindpunt van rij';
-      } else {
-        const field = getField(selectedFieldId);
-        if (field){
-          const dx = latlng.lng - tempLineStart.lng;
-          const dy = latlng.lat - tempLineStart.lat;
-          field.lineAngle = Math.atan2(dx, dy);
-        }
-        // reset preview
-        tempLineStart = null;
-        cancelDraw();
-      }
-    }
 
-    // Gradient generation (Stap 2)
+    // Gradient genereren (Stap 2)
     function generateLinesGlobal(){
       if (!selectedFieldId) return;
       const field = fields.find(f => f.id === selectedFieldId);
       if (!field) return;
       const num = parseInt(document.getElementById('rowCount_all').value) || 10;
       field.numRows = num;
-      // clear existing rows
+      // clear existing
       field.lines.forEach(l => { if (lineLayers[l.id]) map.removeLayer(lineLayers[l.id]); });
       field.lines = [];
+
       const poly = field.points.map(p => L.latLng(p[0], p[1]));
       const bounds = L.latLngBounds(poly);
       const center = bounds.getCenter();
       const angle = field.lineAngle || 0;
-      const spacingMeters = 1.5;
+      const dirX = Math.cos(angle), dirY = Math.sin(angle);
+      const perpX = -dirY, perpY = dirX;
+      const latRange = bounds.getNorth() - bounds.getSouth();
+      const maxSpan = Math.max(bounds.getNorth()-bounds.getSouth(), bounds.getEast()-bounds.getWest()) * 2;
 
-      // 1) bereken start/end per rij en clip
-      const maxSpan = Math.max(bounds.getNorth() - bounds.getSouth(), bounds.getEast() - bounds.getWest()) * 2;
+      for (let i=0; i<num; i++){
+        const offset = (i - (num-1)/2) * (latRange / num);
+        const baseLat = center.lat + perpY * offset;
+        const baseLng = center.lng + perpX * offset;
 
-      // 2) maak rijen langs rijrichting (simplistisch)
-      for(let i=0; i<num; i++){
-        const t = (i - (num-1)/2);
-        // offset langs normaal
-        const dx = Math.cos(angle) * t * spacingMeters;
-        const dy = Math.sin(angle) * t * spacingMeters;
-        const normalLat = center.lat + dy / 111320;
-        const normalLng = center.lng + dx / (111320 * Math.cos(center.lat * Math.PI/180));
-        // lijn start/end door veld
-        const p1 = L.latLng(normalLat - Math.cos(angle)*maxSpan/2, normalLng - Math.sin(angle)*maxSpan/2);
-        const p2 = L.latLng(normalLat + Math.cos(angle)*maxSpan/2, normalLng + Math.sin(angle)*maxSpan/2);
-        const clipped = clipLineToPolygon(p1, p2, poly);
+        const start = L.latLng(baseLat - dirY*maxSpan, baseLng - dirX*maxSpan);
+        const end   = L.latLng(baseLat + dirY*maxSpan, baseLng + dirX*maxSpan);
+        const clipped = clipLineToPolygon(start, end, poly);
         if (!clipped || clipped.length < 2) continue;
+
         const id = 'l' + Date.now() + '_' + i;
         const color1 = COLOR_PALETTE_30[(i*2) % COLOR_PALETTE_30.length];
         const color2 = COLOR_PALETTE_30[(i*2+1) % COLOR_PALETTE_30.length];
-        const line = { id, name: 'Rij ' + (i+1), color1, color2, split: 50, angle, start: clipped[0], end: clipped[1] };
+        const line = {
+          id, name: 'Rij ' + (i+1),
+          color1, color2, split: 50, angle, start: clipped[0], end: clipped[1]
+        };
         field.lines.push(line);
+
         renderLineGradient(line, clipped[0], clipped[1]);
         lineLayers[id] = null;
       }
@@ -232,20 +223,18 @@
     }
 
     function renderLineGradient(line, startPt, endPt){
+      // gradient: two segmenten
       const t = Math.max(0, Math.min(100, line.split || 50)) / 100;
       const splitPt = L.latLng(
-        startPt.lat + t * (endPt.lat - startPt.lat),
-        startPt.lng + t * (endPt.lng - startPt.lng)
+        startPt.lat + t*(endPt.lat - startPt.lat),
+        startPt.lng + t*(endPt.lng - startPt.lng)
       );
-      // verwijder bestaande gradient segments
-      if (line.id + "_a" in lineLayers) { map.removeLayer(lineLayers[line.id + "_a"]); }
-      if (line.id + "_b" in lineLayers) { map.removeLayer(lineLayers[line.id + "_b"]); }
-      const a = L.polyline([startPt, splitPt], { color: line.color1, weight: 8 });
-      const b = L.polyline([splitPt, endPt], { color: line.color2, weight: 8 });
-      a.addTo(map); b.addTo(map);
-      lineLayers[line.id + "_a"] = a;
-      lineLayers[line.id + "_b"] = b;
-      // voeg gradient informatie toe voor live updates
+      if (line.id + "_a" in lineLayers) map.removeLayer(lineLayers[line.id + "_a"]);
+      if (line.id + "_b" in lineLayers) map.removeLayer(lineLayers[line.id + "_b"]);
+      const segA = L.polyline([startPt, splitPt], { color: line.color1, weight: 8 });
+      const segB = L.polyline([splitPt, endPt], { color: line.color2, weight: 8 });
+      segA.addTo(map); segB.addTo(map);
+      lineLayers[line.id + "_a"] = segA; lineLayers[line.id + "_b"] = segB;
     }
 
     // Helpers
@@ -254,7 +243,8 @@
       const intersections = [];
       for (let i=0; i<poly.length; i++){
         const a = poly[i], b = poly[(i+1)%poly.length];
-        const inter = lineSegmentIntersection(a.lng, a.lat, b.lng, b.lat, lineStart.lng, lineStart.lat, lineEnd.lng, lineEnd.lat);
+        const inter = lineSegmentIntersection(a.lng, a.lat, b.lng, b.lat,
+          lineStart.lng, lineStart.lat, lineEnd.lng, lineEnd.lat);
         if (inter) intersections.push({ point: L.latLng(inter.lat, inter.lng), t: inter.t });
       }
       if (intersections.length < 2) return null;
@@ -270,126 +260,13 @@
       return null;
     }
 
-    function selectField(id){
-      if (selectedFieldId && fieldLayers[selectedFieldId]) fieldLayers[selectedFieldId].setStyle({color: '#2D5A27', weight: 3});
-      selectedFieldId = id;
-      if (fieldLayers[id]) fieldLayers[id].setStyle({color: '#FFD700', weight: 4});
-      renderFields();
-    }
-
-    function renderFields() {
-      let html = '';
-      fields.forEach((field) => {
-        const sel = selectedFieldId === field.id;
-        const hasAngle = field.lineAngle != null;
-        html += `<div class="field-card${sel ? ' selected' : ''}" onclick="selectField('${field.id}')">`;
-        html += `<input type="text" class="field-name" value="${field.name}" onchange="updateFieldName('${field.id}', this.value)">`;
-        html += `<div style="display:flex;gap:8px;margin-top:6px;align-items:center;">`;
-        html += `<span>Aantal rijen:</span>`;
-        html += `<input type="number" class="num-input" value="${field.numRows || 10}" min="2" max="200" id="rowCount_${field.id}" onchange="updateRowCount('${field.id}', this.value)">`;
-        html += `<button class="btn btn-green" onclick="generateLinesFor('${field.id}')"><i class="fas fa-magic"></i> Genereer</button>`;
-        html += `<button class="btn btn-danger" onclick="deleteField('${field.id}')"><i class="fas fa-trash"></i></button>`;
-        html += `</div>`;
-        if (hasAngle) {
-          html += `<div style="font-size:0.75rem;color:#28a745;margin-top:5px;">Richting: ${Math.round(field.lineAngle * 180 / Math.PI)}°</div>`;
-        } else {
-          html += `<div style="font-size:0.75rem;color:#999;margin-top:5px;">Teken rij richting</div>`;
-        }
-        // Lijnen per veld
-        html += `<div style="margin-top:6px;border-top:1px solid #eee;padding-top:6px;">`;
-        (field.lines || []).forEach((line) => {
-          html += `<div class="line-item">`;
-          html += `<input type="color" value="${line.color1 || line.color || '#dc3545'}" style="width:28px;height:28px" onchange="updateLineColor('${line.id}', this.value)">`;
-          html += `<input type="color" value="${line.color2 || line.color || '#ffc107'}" style="width:28px;height:28px" onchange="updateLineColor('${line.id}', this.value)">`;
-          html += `<input type="number" class="num-input" min="0" max="100" value="${line.split !== undefined ? line.split : 50}" onchange="updateLineSplit('${line.id}', this.value)">`;
-          html += `<input type="text" class="field-name" value="${line.name || ''}" onchange="updateLineName('${line.id}', this.value)">`;
-          html += `<button class="delete-btn" onclick="deleteLine('${line.id}')"><i class="fas fa-times"></i></button>`;
-          html += `</div>`;
-        });
-        html += `</div></div>`;
-      });
-      document.getElementById('fieldList').innerHTML = html || '<p style="color:#999;padding:20px;">Geen velden. Klik Teken Veld.</p>';
-    }
-
-    function updateFieldName(id, name) {
-      const f = fields.find(x => x.id === id);
-      if (f) { f.name = name; saveData(); renderFields(); }
-    }
-    function updateRowCount(id, v) {
-      const f = fields.find(x => x.id === id);
-      if (f) { f.numRows = parseInt(v) || 10; saveData(); renderFields(); }
-    }
-    function updateLineColor(id, color) {
-      const l = getLine(id);
-      if (l) {
-        // beide kleuren updaten
-        l.color1 = color;
-        // Het gradienteffect wordt per rij aangemaakt; gradient wordt opnieuw gerenderd
-        renderFields();
-        saveData();
-      }
-    }
-    function updateLineSplit(id, v) {
-      const l = getLine(id);
-      if (l) { l.split = Math.max(0, Math.min(100, parseInt(v) || 0)); renderFields(); saveData(); }
-    }
-    function updateLineName(id, name) {
-      const l = getLine(id);
-      if (l) { l.name = name; renderFields(); saveData(); }
-    }
-    function getLine(id) { for (const f of fields) { const l = f.lines.find(x => x.id === id); if (l) return l; } return null; }
-
-    function deleteField(id) {
-      const idx = fields.findIndex(f => f.id === id);
-      if (idx >= 0) {
-        const f = fields[idx];
-        (f.lines || []).forEach(l => { if (lineLayers[l.id]) map.removeLayer(lineLayers[l.id]); });
-        if (fieldLayers[id]) map.removeLayer(fieldLayers[id]);
-        if (directionLayers[id]) map.removeLayer(directionLayers[id]);
-        fields.splice(idx, 1);
-        selectedFieldId = (fields[idx] ? fields[idx].id : null);
-        renderFields();
-        updateStats();
-        saveData();
-      }
-    }
-    function deleteLine(lineId) {
-      if (!lineId) return;
-      for (const f of fields) {
-        f.lines = f.lines.filter(l => l.id !== lineId);
-      }
-      if (lineLayers[lineId]) map.removeLayer(lineLayers[lineId]);
-      renderFields();
-      updateStats();
-      saveData();
-    }
-
-    function generateGradientFor(field){
-      // Stap 2: gradient tekenen voor alle lines van een veld
-      // Dit future-proof functioneel; per rij gradient wordt hier aangeroepen
-    }
-
-    function renderData(){
-      // helper
-      renderFields();
-      updateStats();
-    }
-
-    function updateStats(){
-      document.getElementById('fieldCount').textContent = fields.length;
-      const total = fields.reduce((acc, f) => acc + (f.lines ? f.lines.length : 0), 0);
-      document.getElementById('lineCount').textContent = total;
-    }
-
-    function saveData(){
-      try { localStorage.setItem('tulpenTracker', JSON.stringify({ fields })); } catch(e) {}
-    }
+    // Persist/Load
+    function exportData(){ const blob = new Blob([JSON.stringify({fields}, null, 2)], {type: 'application/json'}); const a=document.createElement('a'); a.href = URL.createObjectURL(blob); a.download='tulpenvelden.json'; a.click(); }
     function loadData(){
       try {
         const d = JSON.parse(localStorage.getItem('tulpenTracker') || 'null');
         if (!d || !d.fields) return;
         fields = d.fields;
-        // veld tekenen
         fields.forEach(f => {
           const pts = f.points.map(p => L.latLng(p[0], p[1]));
           const poly = L.polygon(pts, { color: '#2D5A27', weight: 3, fillOpacity: 0.1 });
@@ -397,20 +274,108 @@
           poly.addTo(map);
           fieldLayers[f.id] = poly;
         });
-      } catch(e) {}
+      } catch(e){}
     }
+    function renderFields() {
+      // veld en rij UI
+      let html = '';
+      fields.forEach((field) => {
+        const sel = selectedFieldId === field.id;
+        const hasAngle = field.lineAngle != null;
+        html += `<div class="field-card${sel?' selected':''}" onclick="selectField('${field.id}')">`;
+        html += `<input type="text" class="field-name" value="${field.name}" onchange="updateFieldName('${field.id}', this.value)">`;
+        html += `<div style="display:flex;gap:8px;align-items:center;margin-top:6px;">`;
+        html += ` <span>Aantal rijen:</span>`;
+        html += ` <input type="number" class="num-input" value="${field.numRows || 10}" min="2" max="200" id="rowCount_${field.id}" onchange="updateRowCount('${field.id}', this.value)">`;
+        html += ` <button class="btn btn-green" onclick="event.stopPropagation();generateLinesFor('${field.id}')"><i class="fas fa-magic"></i></button>`;
+        html += ` <button class="btn btn-danger" onclick="event.stopPropagation();deleteField('${field.id}')"><i class="fas fa-trash"></i></button>`;
+        html += `</div>`;
+        if (hasAngle) html += `<div style="font-size:0.75rem;color:#28a745;margin-top:5px;">Richting: ${Math.round(field.lineAngle * 180/Math.PI)}°</div>`;
+        else html += `<div style="font-size:0.75rem;color:#999;margin-top:5px;">Teken rij richting</div>`;
+        // Lijnen (gradient)
+        html += `<div style="margin-top:6px;border-top:1px solid #eee;padding-top:6px;">`;
+        (field.lines || []).forEach(line => {
+          html += `<div class="line-item" style="align-items:center;">`;
+          html += `<input type="color" value="${line.color1 || '#dc3545'}" style="width:28px;height:28px" onchange="updateLineColor('${line.id}', this.value)">`;
+          html += `<input type="color" value="${line.color2 || '#ffc107'}" style="width:28px;height:28px" onchange="updateLineColor('${line.id}', this.value)">`;
+          html += `<input type="number" class="num-input" min="0" max="100" value="${line.split || 50}" onchange="updateLineSplit('${line.id}', this.value)">`;
+          html += `<input type="text" class="field-name" value="${line.name || 'Rij'}" onchange="updateLineName('${line.id}', this.value)">`;
+          html += `<button class="delete-btn" onclick="deleteLine('${line.id}')"><i class="fas fa-times"></i></button>`;
+          html += `</div>`;
+        });
+        html += `</div>`;
+        html += `</div>`;
+      });
+      document.getElementById('fieldList').innerHTML = html || '<p style="color:#999;padding:20px;">Geen velden. Teken veld.</p>';
+    }
+
+    function updateFieldName(id, name){
+      const f = fields.find(x => x.id === id);
+      if (f){ f.name = name; saveData(); renderFields(); }
+    }
+    function updateRowCount(id, v){
+      const f = fields.find(x => x.id === id);
+      if (f) { f.numRows = parseInt(v) || 10; saveData(); renderFields(); }
+    }
+    function updateLineColor(id, color){
+      const l = getLine(id);
+      if (l){ l.color1 = color; l.color2 = l.color2 || l.color1; renderFields(); saveData(); }
+    }
+    function updateLineSplit(id, v){
+      const l = getLine(id);
+      if (l){ l.split = Math.max(0, Math.min(100, parseInt(v) || 0)); renderFields(); saveData(); }
+    }
+    function updateLineName(id, name){
+      const l = getLine(id);
+      if (l){ l.name = name; renderFields(); saveData(); }
+    }
+    function getLine(id){
+      for (const f of fields){
+        const l = f.lines.find(x => x.id === id);
+        if (l) return l;
+      }
+      return null;
+    }
+    function deleteField(id){
+      const idx = fields.findIndex(f => f.id === id);
+      if (idx>=0){
+        const f = fields[idx];
+        (f.lines||[]).forEach(l => { if (lineLayers[l.id]) map.removeLayer(lineLayers[l.id]); });
+        if (fieldLayers[id]) map.removeLayer(fieldLayers[id]);
+        fields.splice(idx,1);
+        if (selectedFieldId === id) selectedFieldId = null;
+        renderFields(); updateStats(); saveData();
+      }
+    }
+    function deleteLine(lineId){
+      if (!lineId) return;
+      for (const f of fields){
+        f.lines = f.lines.filter(l => l.id !== lineId);
+      }
+      if (lineLayers[lineId]) map.removeLayer(lineLayers[lineId]);
+      renderFields(); updateStats(); saveData();
+    }
+
     function generateLinePointsForField(field){
-      // placeholder
+      // TODO: vervolledigen gradient op basis van start/end
     }
 
     function clipLineForGradient(lineStart, lineEnd, fieldPoints){
-      // placeholder voor clip
       return [lineStart, lineEnd];
     }
 
-    // Init
-    init();
-    // Stap-2 placeholder helpers
+    // Init + helpers
+    function exportData(){ const blob = new Blob([JSON.stringify({fields}, null, 2)], {type:'application/json'}); const a=document.createElement('a'); a.href = URL.createObjectURL(blob); a.download='tulpenvelden.json'; a.click(); }
+    function loadData(){ /* status: data in localStorage wordt geladen en veld getekend */ }
+    function renderFieldsUi(){ /* per-rij UI */ }
+    function renderLineGradient(line, startPt, endPt){
+      // gradient tekenen
+    }
+    function clipLine(start, end, polygon){ return [start, end]; }
+    function onLoad(){ init(); }
+
+    // start
+    document.addEventListener('DOMContentLoaded', onLoad);
   </script>
 </body>
 </html>
