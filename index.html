@@ -1,391 +1,427 @@
 <!DOCTYPE html>
 <html lang="nl">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Tulpen Velden Tracker</title>
-  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
-  <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    html, body, #map { height: 100%; }
-    body { font-family: Arial, sans-serif; background: #F5F5DC; }
-    .header { background: linear-gradient(135deg, #2D5A27, #3d7a35); color: white; padding: 10px 20px; display:flex; align-items:center; justify-content: space-between; position: fixed; top:0; left:0; right:0; height:50px; z-index:1000; }
-    .header h1 { font-size: 1.1rem; display: flex; align-items: center; gap: 10px; }
-    .header h1 i { color: #FFD700; }
-    .header-actions { display: flex; gap: 8px; }
-    .btn { padding: 8px 12px; border: none; border-radius: 6px; cursor: pointer; font-size: 0.85rem; display:flex; align-items:center; gap:6px; }
-    .btn-primary { background: #FFD700; color: #333; }
-    .btn-secondary { background: rgba(255,255,255,0.2); color: white; }
-    .btn-danger { background: #dc3545; color: white; }
-    .btn-green { background: #2D5A27; color: white; }
-    #map { position: fixed; top: 50px; left: 0; right: 320px; bottom: 0; z-index: 1; }
-    .sidebar { position: fixed; top: 50px; right: 0; width: 320px; bottom: 0; background: white; box-shadow: -2px 0 15px rgba(0,0,0,0.1); overflow-y: auto; padding: 12px; z-index: 2; }
-    .section { margin-bottom: 14px; }
-    .section h3 { font-size: 0.9rem; color: #2D5A27; margin-bottom: 8px; }
-    .help-text { font-size: 0.8rem; color: #666; padding: 10px; background: #fff9e6; border-radius: 6px; line-height: 1.5; }
-    .field-card { background: #f8f8f8; border-radius: 8px; padding: 10px; margin-bottom: 10px; border: 1px solid #ddd; }
-    .field-card.selected { border-color: #FFD700; border-width: 2px; }
-    .field-name { width: 100%; padding: 6px; border: 1px solid #ddd; border-radius: 4px; margin-bottom: 8px; font-size: 0.85rem; }
-    .row { display:flex; gap:8px; align-items:center; margin-top:6px; }
-    .num-input { width: 60px; padding: 6px; border: 1px solid #ddd; border-radius: 4px; }
-    .line-item { display: flex; align-items: center; gap: 8px; padding: 6px; background: white; border-radius: 4px; margin-top: 6px; border: 1px solid #eee; }
-    .line-item input[type="color"] { width: 28px; height: 28px; padding: 0; border: none; }
-    .delete-btn { background: none; border: none; color: #999; cursor: pointer; padding: 4px; }
-    .delete-btn:hover { color: #dc3545; }
-    .gradient { display:inline-block; width: 28px; height: 28px; border-radius:4px; border:1px solid #ccc; vertical-align: middle; }
-    .bottom-bar { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); background: rgba(0,0,0,0.85); color: white; padding: 12px 16px; border-radius: 6px; z-index: 1000; display: none; }
-    .bottom-bar.visible { display: block; }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>A&I Bewindvoering</title>
+    <style>
+        :root {
+            --primary-green: #6cb016; /* Benadering van de groene kleur uit de video */
+            --text-dark: #333333;
+            --text-light: #ffffff;
+            --bg-light: #f4f4f4;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            color: var(--text-dark);
+            line-height: 1.6;
+        }
+
+        /* Navigatie */
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 50px;
+            background-color: #fff;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        header .logo {
+            font-size: 24px;
+            font-weight: bold;
+            text-decoration: none;
+            color: var(--text-dark);
+        }
+
+        header nav a {
+            text-decoration: none;
+            color: var(--text-dark);
+            margin-left: 20px;
+            font-weight: 500;
+        }
+
+        /* Flex Sections Setup */
+        .split-section {
+            display: flex;
+            min-height: 500px;
+        }
+
+        .split-half {
+            flex: 1;
+            padding: 60px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .bg-green {
+            background-color: var(--primary-green);
+            color: var(--text-light);
+        }
+
+        /* Hero Sectie */
+        .hero-img {
+            background-image: url('https://images.unsplash.com/photo-1573164713988-8665fc963095?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80');
+            background-size: cover;
+            background-position: center;
+        }
+
+        .hero-text h3 {
+            font-weight: normal;
+            margin-bottom: 10px;
+        }
+
+        .hero-text h1 {
+            font-size: 48px;
+            margin-bottom: 20px;
+            line-height: 1.1;
+        }
+
+        .hero-text p {
+            font-size: 18px;
+        }
+
+        /* Over Ons Sectie */
+        .about-img {
+            background-image: url('https://images.unsplash.com/photo-1556761175-4b46a572b786?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80');
+            background-size: cover;
+            background-position: center;
+        }
+
+        .about-text h2 {
+            font-size: 42px;
+            margin-bottom: 20px;
+        }
+
+        .about-text p {
+            font-size: 16px;
+            line-height: 1.8;
+        }
+
+        /* Info Sectie (Wat is bewindvoering) */
+        .info-section {
+            padding: 80px 50px;
+            background-color: #e8ecef;
+            background-image: linear-gradient(rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.9)), url('https://images.unsplash.com/photo-1554224155-6726b3ff858f?ixlib=rb-4.0.3&auto=format&fit=crop&w=1600&q=80');
+            background-size: cover;
+            background-attachment: fixed;
+        }
+
+        .info-container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .info-container h4 {
+            color: var(--text-dark);
+            font-weight: normal;
+            margin-bottom: 5px;
+        }
+
+        .info-container h2 {
+            font-size: 42px;
+            margin-bottom: 20px;
+        }
+
+        .info-container p {
+            margin-bottom: 20px;
+        }
+
+        .info-container ul {
+            margin-left: 20px;
+            margin-bottom: 20px;
+        }
+
+        .info-container ul li {
+            margin-bottom: 10px;
+        }
+
+        /* Tarieven Sectie */
+        .tariffs-section {
+            padding: 80px 50px;
+            background-color: var(--primary-green);
+            color: var(--text-light);
+        }
+
+        .tariffs-container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .tariffs-container h3 {
+            margin-bottom: 30px;
+            font-size: 28px;
+        }
+
+        .tariff-block {
+            margin-bottom: 30px;
+        }
+
+        .tariff-block p {
+            margin-bottom: 5px;
+        }
+
+        /* Contact Sectie */
+        .contact-section {
+            padding: 80px 50px;
+            background-color: #fff;
+        }
+        
+        .contact-header {
+            margin-bottom: 40px;
+            padding-left: 50px;
+        }
+
+        .contact-header h1 {
+            font-size: 48px;
+        }
+
+        .contact-wrapper {
+            display: flex;
+            background-color: var(--primary-green);
+            color: var(--text-light);
+            padding: 60px;
+        }
+
+        .contact-form {
+            flex: 1;
+            padding-right: 40px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-row {
+            display: flex;
+            gap: 20px;
+        }
+
+        .form-row .form-group {
+            flex: 1;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        input[type="text"],
+        input[type="email"],
+        textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            background-color: #fff;
+        }
+
+        textarea {
+            height: 120px;
+            resize: vertical;
+        }
+
+        button {
+            background-color: #fff;
+            color: var(--text-dark);
+            padding: 12px 30px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 16px;
+        }
+
+        .contact-info {
+            flex: 1;
+            padding-left: 40px;
+        }
+
+        .contact-info h2 {
+            font-size: 32px;
+            margin-bottom: 15px;
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--primary-green);
+            color: var(--text-light);
+            padding: 40px 50px;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+        }
+
+        footer h3 {
+            margin-bottom: 10px;
+        }
+
+        footer p {
+            margin-bottom: 5px;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .split-section {
+                flex-direction: column;
+            }
+            .contact-wrapper {
+                flex-direction: column;
+            }
+            .contact-form {
+                padding-right: 0;
+                margin-bottom: 40px;
+            }
+            .contact-info {
+                padding-left: 0;
+            }
+            .form-row {
+                flex-direction: column;
+                gap: 0;
+            }
+        }
+    </style>
 </head>
 <body>
-  <div class="header">
-    <h1><i class="fas fa-seedling"></i> Tulpen Velden Tracker</h1>
-    <div class="header-actions">
-      <button class="btn btn-primary" onclick="startDrawField()"><i class="fas fa-draw-polygon"></i> Teken Veld</button>
-      <button class="btn btn-secondary" onclick="startDrawLine()"><i class="fas fa-arrows-alt-h"></i> Rij Richting</button>
-      <button class="btn btn-secondary" onclick="exportData()"><i class="fas fa-download"></i> Exporteer</button>
-    </div>
-  </div>
 
-  <div id="map"></div>
+    <header>
+        <a href="#" class="logo">Home</a>
+        <nav>
+            <a href="#contact">Contact</a>
+        </nav>
+    </header>
 
-  <div class="sidebar" id="sidebar">
-    <div class="section">
-      <h3>Instructies</h3>
-      <div class="help-text">
-        1. Teken veld 2. Selecteer veld 3. Teken rij richting 4. Genereer rijen 5. Pas kleur/naam aan
-      </div>
-    </div>
+    <section class="split-section">
+        <div class="split-half hero-img"></div>
+        <div class="split-half bg-green hero-text">
+            <h3>vertrouwd bewind</h3>
+            <h1>A&I<br>Bewindvoering</h1>
+            <p>Ervaar financiële steun en begeleiding.</p>
+        </div>
+    </section>
 
-    <div class="section" id="fieldSection">
-      <h3>Velden</h3>
-      <div id="fieldList"></div>
-    </div>
+    <section class="split-section">
+        <div class="split-half bg-green about-text">
+            <h2>Over A&I bewindvoering</h2>
+            <p>
+                Wij zijn Anja Kuiper en Inge Idzenga, wij zijn beiden al jaren werkzaam als bewindvoerder en zijn recent een samenwerkingsverband aangegaan. Gevestigd in de kop van Noord-Holland zetten wij ons in voor financiële ondersteuning en rusten afgestemd op uw behoeften. A&I bewindvoering is aangesloten bij ZEKER Financiële Zorgverlening
+            </p>
+        </div>
+        <div class="split-half about-img"></div>
+    </section>
 
-    <div class="section" id="fieldSettings" style="display:none;">
-      <h3>Veld Instellingen</h3>
-      <div style="display:flex;gap:8px;align-items:center;">
-        <span>Aantal rijen per veld:</span>
-        <input type="number" id="rowCount_all" class="num-input" value="10" min="2" max="200" />
-        <button class="btn btn-green" onclick="generateLinesGlobal()"><i class="fas fa-magic"></i> Genereer</button>
-      </div>
-    </div>
+    <section class="info-section">
+        <div class="info-container">
+            <h4>Wanneer bewind?</h4>
+            <h2>Wat is bewindvoering?</h2>
+            <p>Bewindvoering is een beschermingsmaatregel die wordt uitgesproken door de kantonrechter, wanneer u tijdelijk of duurzaam niet in staat bent om uw financiën te behartigen. dit kan allerlei redenen hebben, zoals ouderdom, ziekte, verstandelijke beperking en/of schulden.</p>
+            <p>Bewindvoering zal worden uitgesproken over alle gelden en goederen voor bepaalde of onbepaalde tijd.</p>
+            <p>De bewindvoerder staat onder toezicht van de kantonrechter en zal jaarlijks verantwoording afleggen.</p>
+            <p>Voor wie</p>
+            <p>Bewindvoering is bedoeld voor meerderjarige die tijdelijk of duurzaam niet in staat zijn om zelfstandig hun financiële belangen te behartigen.</p>
+            
+            <p>Wie kan bewindvoering aanvragen:</p>
+            <p>Bewind kan worden aangevraagd bij de kantonrechter door:</p>
+            <ul>
+                <li>De betrokkene zelf</li>
+                <li>Echtgenoot of andere partner</li>
+                <li>Familie tot in de vierde graad (ouders, grootouders, kinderen, kleinkinderen, broers, zusters, ooms, tantes, neven en nichten)</li>
+                <li>Degene die het gezag uitoefent, bijvoorbeeld de voogd, als de betrokkene nog minderjarig is</li>
+                <li>De bewindvoerder, als er al een onderbewindstelling loopt</li>
+                <li>De instelling die de betrokkene verzorgt of begeleidt</li>
+            </ul>
+        </div>
+    </section>
 
-    <div class="stats">
-      <span id="fieldCount">0</span> velden • <span id="lineCount">0</span> rijen
-    </div>
-  </div>
+    <section class="tariffs-section">
+        <div class="tariffs-container">
+            <h3>Tarieven bewindvoering</h3>
+            <p>De financiële vergoeding voor de werkzaamheden van een bewindvoerder / mentor zijn landelijk vastgesteld en worden jaarlijks geïndexeerd. De vergoeding komt voor rekening van de betrokkene. Indien de betrokkene deze kosten zelf niet kan dragen, kan deze in aanmerking komen voor vergoeding uit de bijzondere bijstand. Onderstaand zijn de meest voorkomende tarieven weergegeven.</p>
+            <br>
+            
+            <div class="tariff-block">
+                <p>Maandtarief Bewindvoering:</p>
+                <p>Alleenstaande € 135,83</p>
+                <p>Samenwonenden € 162,83</p>
+            </div>
 
-  <div class="bottom-bar" id="bottomBar">
-    <span id="bottomText"></span>
-    <button class="btn btn-secondary" style="margin-left:8px;" onclick="cancelDraw()">Annuleren</button>
-  </div>
+            <div class="tariff-block">
+                <p>Bewindvoering met problematische schulden:</p>
+                <p>Alleenstaande € 175,58</p>
+                <p>Samenwonenden € 210,66</p>
+            </div>
 
-  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-  <script>
-    // Palette
-    const COLOR_PALETTE_30 = [
-      "#dc3545","#ff6b6b","#ff8c42","#f6a21a","#ffd166",
-      "#7bd389","#5ecae6","#4dabf7","#6f42c1","#a241d9",
-      "#e25b8d","#f472b6","#f59e0b","#84cc16","#10b981",
-      "#14b8a6","#06b6d4","#3b82f6","#8b5cf6","#a3e635",
-      "#f871cd","#eab308","#f97316","#f43f5e","#f59e6b",
-      "#f4727b","#34d399","#60a5fa","#e11d48","#2dd4bf"
-    ];
+            <div class="tariff-block">
+                <p>Intakevergoeding:</p>
+                <p>Alleenstaande € 767,00</p>
+                <p>Samenwonenden € 920,00</p>
+            </div>
 
-    let map, fields = [], selectedFieldId = null, fieldLayers = {}, lineLayers = {};
-    let mode = 'select';
-    let currentFieldPnts = [];
-    let currentFieldPolyline = null;
+            <div class="tariff-block">
+                <p>Beëindigingstarief:</p>
+                <p>Alleenstaande € 288,00</p>
+                <p>Samenwonenden € 346,00</p>
+            </div>
+        </div>
+    </section>
 
-    function init() {
-      map = L.map('map').setView([52.0, 4.3], 17);
-      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { attribution: '© OpenStreetMap' }).addTo(map);
-      map.on('click', onMapClick);
-      loadData();
-      renderFields();
-      updateStats();
-    }
+    <section id="contact" class="contact-section">
+        <div class="contact-header">
+            <h1>Contact</h1>
+            <button style="background-color: #f4f4f4; border: 1px solid #ccc; margin-top: 10px;">kom in contact</button>
+        </div>
+        
+        <div class="contact-wrapper">
+            <div class="contact-form">
+                <form>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Name</label>
+                            <input type="text">
+                        </div>
+                        <div class="form-group">
+                            <label>Email</label>
+                            <input type="email">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Message</label>
+                        <textarea></textarea>
+                    </div>
+                    <button type="submit">Submit</button>
+                    <p style="font-size: 10px; margin-top: 10px;">This site is protected by reCAPTCHA and the Google Privacy Policy and Terms of Service apply.</p>
+                </form>
+            </div>
+            <div class="contact-info">
+                <h2>Contact Us for Expert Help</h2>
+                <p>Reach out to Pietje in Den Helder for financial support and assistance</p>
+            </div>
+        </div>
+    </section>
 
-    function onMapClick(e){
-      if (mode === 'drawField') {
-        addFieldPoint(e.latlng);
-      } else if (mode === 'drawLine') {
-        addLinePoint(e.latlng);
-      }
-    }
+    <footer>
+        <div>
+            <h3>A&I bewindvoering</h3>
+            <p>h.o.d.n ZEKER Financiële Zorgverlening</p>
+            <p>Postbus 50099</p>
+            <p>1305 AB Almere</p>
+            <p>0857827801</p>
+        </div>
+        <div>
+            <p>Made with <strong>Durable</strong></p>
+        </div>
+    </footer>
 
-    // START Veld tekenen
-    function startDrawField(){
-      cancelDraw();
-      mode = 'drawField';
-      currentFieldPnts = [];
-      document.getElementById('bottomBar').className = 'bottom-bar visible';
-      document.getElementById('bottomText').textContent = 'Klik punten voor het veld. Klik daarna Veld Maken.';
-    }
-
-    function addFieldPoint(latlng){
-      currentFieldPnts.push(latlng);
-      L.circleMarker(latlng, { radius: 5, color: '#2D5A27', fillColor: '#FFD700' }).addTo(map);
-      if (currentFieldPnts.length >= 3){
-        const pts = currentFieldPnts.map(p => [p.lat, p.lng]);
-        pts.push(pts[0]);
-        if (window._tempVeld) map.removeLayer(window._tempVeld);
-        window._tempVeld = L.polygon(pts.map(pp => L.latLng(pp[0], pp[1])), { color: '#2D5A27', fillOpacity: 0.08, dashArray: '5,5' }).addTo(map);
-      }
-      document.getElementById('bottomText').innerHTML = '<strong>' + currentFieldPnts.length + ' punten</strong> - Klik Veld Maken';
-    }
-
-    function finishFieldDraw(){
-      if (currentFieldPnts.length < 3) { alert('Minimaal 3 punten nodig.'); return; }
-      const pts = currentFieldPnts.map(p => [p.lat, p.lng]);
-      pts.push(pts[0]);
-      const id = 'f' + Date.now();
-      const field = { id, name: 'Veld ' + (fields.length + 1), points: pts, lines: [], lineAngle: null, numRows: 10 };
-      fields.push(field);
-      const poly = L.polygon(pts.map(pp => L.latLng(pp[0], pp[1])), { color: '#2D5A27', weight: 3, fillOpacity: 0.1 });
-      poly.on('click', () => selectField(id));
-      poly.addTo(map);
-      fieldLayers[id] = poly;
-      cancelDraw();
-      selectedFieldId = id;
-      renderFields();
-      updateStats();
-      saveData();
-    }
-
-    function cancelDraw(){
-      mode = 'select';
-      currentFieldPnts = [];
-      if (window._tempVeld) { map.removeLayer(window._tempVeld); window._tempVeld = null; }
-      document.getElementById('bottomText').textContent = '';
-      document.getElementById('bottomBar').className = 'bottom-bar';
-    }
-
-    // Rij richting tekenen (Stap 2)
-    let rijRichting_start = null;
-    function startDrawLine(){
-      if (!selectedFieldId) return;
-      cancelDraw();
-      mode = 'drawLine';
-      rijRichting_start = null;
-      document.getElementById('bottomText').textContent = 'Klik beginpunt van rij richting';
-      document.getElementById('bottomBar').className = 'bottom-bar visible';
-    }
-
-    function addLinePoint(latlng){
-      if (!rijRichting_start){
-        rijRichting_start = latlng;
-        L.circleMarker(latlng, { radius: 6, color:'#FFD700', fillColor:'#2D5A27' }).addTo(map);
-        document.getElementById('bottomText').textContent = 'Klik eindpunt';
-      } else {
-        const end = latlng;
-        const field = fields.find(f => f.id === selectedFieldId);
-        if (field){
-          const dx = end.lng - rijRichting_start.lng;
-          const dy = end.lat - rijRichting_start.lat;
-          field.lineAngle = Math.atan2(dx, dy);
-        }
-        cancelDraw();
-        renderFields();
-        saveData();
-      }
-    }
-
-    // Genereren rijen + gradient (Stap 2)
-    function generateLinesGlobal(){
-      if (!selectedFieldId) return;
-      const field = fields.find(f => f.id === selectedFieldId);
-      if (!field) return;
-      const num = parseInt(document.getElementById('rowCount_all').value) || 10;
-      field.numRows = num;
-
-      field.lines.forEach(l => { if (lineLayers[l.id]) map.removeLayer(lineLayers[l.id]); });
-      field.lines = [];
-
-      const poly = field.points.map(p => L.latLng(p[0], p[1]));
-      const bounds = L.latLngBounds(poly);
-      const center = bounds.getCenter();
-      const angle = field.lineAngle || 0;
-      const dirX = Math.cos(angle), dirY = Math.sin(angle);
-      const span = Math.max(bounds.getNorth()-bounds.getSouth(), bounds.getEast()-bounds.getWest()) * 2;
-      const nx = -Math.sin(angle), ny = Math.cos(angle);
-      const cosLat = Math.cos(center.lat * Math.PI/180);
-      const degPerMeterLat = 1/111320;
-      const degPerMeterLng = 1/(111320 * cosLat);
-
-      for (let i=0; i<num; i++){
-        const offsetMeters = (i - (num-1)/2) * 1.5;
-        const baseLat = center.lat + ny * offsetMeters * degPerMeterLat;
-        const baseLng = center.lng + nx * offsetMeters * degPerMeterLng;
-
-        const p1 = L.latLng(baseLat - Math.cos(angle)*span/2, baseLng - Math.sin(angle)*span/2);
-        const p2 = L.latLng(baseLat + Math.cos(angle)*span/2, baseLng + Math.sin(angle)*span/2);
-        const clipped = clipLineToPolygon(p1, p2, field.points.map(pp => [pp[0], pp[1]]));
-        if (!clipped || clipped.length < 2) continue;
-
-        const id = 'l' + Date.now() + '_' + i;
-        const color1 = COLOR_PALETTE_30[(i*2) % COLOR_PALETTE_30.length];
-        const color2 = COLOR_PALETTE_30[(i*2+1) % COLOR_PALETTE_30.length];
-        const line = { id, name: 'Rij ' + (i+1), color1, color2, split: 50, angle, start: clipped[0], end: clipped[1] };
-        field.lines.push(line);
-        renderLineGradient(line, clipped[0], clipped[1]);
-        lineLayers[id] = null;
-      }
-
-      renderFields();
-      updateStats();
-      saveData();
-    }
-
-    function renderLineGradient(line, startPt, endPt){
-      const t = Math.max(0, Math.min(100, line.split || 50)) / 100;
-      const splitPt = L.latLng(startPt.lat + t*(endPt.lat - startPt.lat), startPt.lng + t*(endPt.lng - startPt.lng));
-      if (line.id + "_a" in lineLayers) map.removeLayer(lineLayers[line.id + "_a"]);
-      if (line.id + "_b" in lineLayers) map.removeLayer(lineLayers[line.id + "_b"]);
-      const a = L.polyline([startPt, splitPt], { color: line.color1, weight: 8 });
-      const b = L.polyline([splitPt, endPt], { color: line.color2, weight: 8 });
-      a.addTo(map); b.addTo(map);
-      lineLayers[line.id + "_a"] = a;
-      lineLayers[line.id + "_b"] = b;
-    }
-
-    // Clip helpers
-    function clipLineToPolygon(lineStart, lineEnd, polygon){
-      const poly = polygon.map(p => L.latLng(p[0], p[1]));
-      const intersections = [];
-      for (let i=0; i<poly.length; i++){
-        const a = poly[i], b = poly[(i+1)%poly.length];
-        const inter = lineSegmentIntersection(a.lng, a.lat, b.lng, b.lat, lineStart.lng, lineStart.lat, lineEnd.lng, lineEnd.lat);
-        if (inter) intersections.push({ point: L.latLng(inter.lat, inter.lng), t: inter.t });
-      }
-      if (intersections.length < 2) return null;
-      intersections.sort((A,B)=> A.t - B.t);
-      return [intersections[0].point, intersections[intersections.length-1].point];
-    }
-    function lineSegmentIntersection(x1,y1,x2,y2,x3,y3,x4,y4){
-      const d = (x1-x2)*(y3-y4) - (y1-y2)*(x3-x4);
-      if (Math.abs(d) < 0.0001) return null;
-      const t = ((x1-x3)*(y3-y4) - (y1-y3)*(x3-x4)) / d;
-      const u = -((x1-x2)*(y1-y3) - (y1-y2)*(x1-x3)) / d;
-      if (t>=0 && t<=1 && u>=0 && u<=1) return { lng: x1 + t*(x2-x1), lat: y1 + t*(y2-y1), t };
-      return null;
-    }
-
-    // Persist/Load
-    function exportData(){ const blob = new Blob([JSON.stringify({fields}, null, 2)], { type: 'application/json' }); const a=document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = 'tulpenvelden.json'; a.click(); }
-    function loadData(){ try { const d = JSON.parse(localStorage.getItem('tulpenTracker') || 'null'); if (!d || !d.fields) return; fields = d.fields; fields.forEach(f => { const pts = f.points.map(p => L.latLng(p[0], p[1])); const poly = L.polygon(pts, { color:'#2D5A27', weight:3, fillOpacity:0.1 }); poly.on('click', () => selectField(f.id)); poly.addTo(map); fieldLayers[f.id] = poly; }); } catch(e) {} }
-
-    // UI helpers
-    function selectField(id){
-      if (selectedFieldId && fieldLayers[selectedFieldId]) fieldLayers[selectedFieldId].setStyle({ color:'#2D5A27', weight:3 });
-      selectedFieldId = id;
-      if (fieldLayers[id]) fieldLayers[id].setStyle({ color:'#FFD700', weight:4 });
-      renderFields();
-    }
-
-    function renderFields(){
-      let html = '';
-      fields.forEach((field) => {
-        const sel = selectedFieldId === field.id;
-        const hasAngle = field.lineAngle != null;
-        html += '<div class="field-card' + (sel ? ' selected' : '') + '" onclick="selectField(\'' + field.id + '\')">';
-        html += '<input type="text" class="field-name" value="' + field.name + '" onchange="updateFieldName(\'' + field.id + '\', this.value)">';
-        html += '<div class="row" style="align-items:center;margin-top:6px;">';
-        html += '<span>Aantal rijen:</span>';
-        html += '<input type="number" class="num-input" value="' + (field.numRows || 10) + '" min="2" max="200" id="rowCount_' + field.id + '" onchange="updateRowCount(\'' + field.id + '\', this.value)">';
-        html += '<button class="btn btn-green" onclick="event.stopPropagation();generateLinesFor(\\'' + field.id + '\\')"><i class="fas fa-magic"></i> Genereer</button>';
-        html += '<button class="btn btn-danger" onclick="event.stopPropagation();deleteField(\\'' + field.id + '\\')"><i class="fas fa-trash"></i></button>';
-        html += '</div>';
-        if (hasAngle){
-          html += '<div style="font-size:0.75rem;color:#28a745;margin-top:5px;">Richting: ' + Math.round(field.lineAngle * 180 / Math.PI) + '°</div>';
-        } else {
-          html += '<div style="font-size:0.75rem;color:#999;margin-top:5px;">Teken rij richting</div>';
-        }
-        html += '<div style="margin-top:8px;border-top:1px solid #eee;padding-top:6px;">';
-        (field.lines || []).forEach(line => {
-          html += '<div class="line-item" style="align-items:center;">';
-          html += '<input type="color" value="'+ (line.color1 || line.color || '#dc3545') +'" onchange="updateLineColor(\''+line.id+'\', this.value)" style="width:28px;height:28px">';
-          html += '<input type="color" value="'+ (line.color2 || line.color || '#ffc107') +'" onchange="updateLineColor(\''+line.id+'\', this.value)" style="width:28px;height:28px">';
-          html += '<input type="number" class="num-input" min="0" max="100" value="'+ (line.split || 50) +'" onchange="updateLineSplit(\''+line.id+'\', this.value)">';
-          html += '<input type="text" class="field-name" value="'+ (line.name || '') +'" onchange="updateLineName(\''+line.id+'\', this.value)">';
-          html += '<button class="delete-btn" onclick="deleteLine(\''+line.id+'\')"><i class="fas fa-times"></i></button>';
-          html += '</div>';
-        });
-        html += '</div>';
-        html += '</div>';
-      });
-      document.getElementById('fieldList').innerHTML = html || '<p style="color:#999;padding:20px;">Geen velden. Teken veld.</p>';
-    }
-
-    function updateFieldName(id, name){
-      const f = fields.find(x => x.id === id);
-      if (f) { f.name = name; saveData(); renderFields(); }
-    }
-    function updateRowCount(id, v){
-      const f = fields.find(x => x.id === id);
-      if (f) { f.numRows = parseInt(v) || 10; saveData(); renderFields(); }
-    }
-    function updateLineColor(id, color){
-      const l = getLine(id);
-      if (!l) return;
-      // stel zowel color1 als color2 in; minimal ondersteuning
-      l.color1 = color;
-      if (lineLayers[id]) lineLayers[id].setStyle({ color: color });
-      saveData(); renderFields();
-    }
-    function updateLineSplit(id, v){
-      const l = getLine(id);
-      if (!l) return;
-      l.split = Math.max(0, Math.min(100, parseInt(v) || 0));
-      renderFields(); saveData();
-    }
-    function updateLineName(id, name){
-      const l = getLine(id);
-      if (l) { l.name = name; renderFields(); saveData(); }
-    }
-    function deleteField(id){
-      const idx = fields.findIndex(f => f.id === id);
-      if (idx >= 0){
-        const f = fields[idx];
-        (f.lines || []).forEach(l => { if (lineLayers[l.id]) map.removeLayer(lineLayers[l.id]); });
-        if (fieldLayers[id]) map.removeLayer(fieldLayers[id]);
-        fields.splice(idx,1);
-        if (selectedFieldId === id) selectedFieldId = null;
-        renderFields(); updateStats(); saveData();
-      }
-    }
-    function deleteLine(id){
-      if (!id) return;
-      for (const f of fields){
-        f.lines = f.lines.filter(l => l.id !== id);
-      }
-      if (lineLayers[id]) map.removeLayer(lineLayers[id]);
-      renderFields(); updateStats(); saveData();
-    }
-
-    function generateLinePointsForField(field){
-      // placeholder
-    }
-
-    function clipLineForGradient(lineStart, lineEnd, fieldPoints){
-      return [lineStart, lineEnd];
-    }
-
-    function exportData(){
-      const blob = new Blob([JSON.stringify({fields}, null, 2)], {type:'application/json'});
-      const a=document.createElement('a');
-      a.href = URL.createObjectURL(blob); a.download='tulpenvelden.json'; a.click();
-    }
-
-    // Init
-    function loadInitial(){
-      // load data
-    }
-
-    // Init call
-    document.addEventListener('DOMContentLoaded', function(){ /* boot */ });
-  </script>
 </body>
 </html>
